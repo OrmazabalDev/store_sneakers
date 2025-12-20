@@ -365,10 +365,12 @@ const ProductCard = ({ product }: ProductCardProps) => {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <div className={`absolute top-4 left-4 z-20 px-3 py-1.5 text-[10px] font-bold uppercase tracking-widest rounded-sm border backdrop-blur-md ${product.badgeColor} flex items-center gap-1.5`}>
-        {product.featured && <Star className="w-3 h-3" fill="currentColor" />}
-        {product.status}
-      </div>
+      {(product.status || product.featured) && (
+        <div className={`absolute top-4 left-4 z-20 px-3 py-1.5 text-[10px] font-bold uppercase tracking-widest rounded-sm border backdrop-blur-md ${product.badgeColor} flex items-center gap-1.5`}>
+          {product.featured && <Star className="w-3 h-3" fill="currentColor" />}
+          {product.status && <span>{product.status}</span>}
+        </div>
+      )}
       <div className="relative aspect-[4/5] overflow-hidden bg-[#1a1a1a]">
         <img
           src={product.image || "/placeholder.svg"}
