@@ -4,15 +4,15 @@ import {
   MessageCircle,
   ArrowRight,
   ShieldCheck,
-  Globe,
+  Moon,
   Check,
   Instagram,
   Menu,
   X,
   Box,
+  Star,
   Sparkles,
   TrendingUp,
-  Star,
 } from 'lucide-react';
 
 const SHEET_ID = import.meta.env.VITE_SHEET_ID;
@@ -99,61 +99,42 @@ function getWhatsAppLink(message: string, productData?: { brand: string; model: 
 const Hero = () => {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#0B0B0B] pt-20">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-[#1F1F1F] via-[#0B0B0B] to-[#000000]"></div>
-      <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.15] mix-blend-overlay"></div>
+      {/* Background Texture/Gradient */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-[#1F1F1F] via-[#0B0B0B] to-[#0B0B0B] opacity-60"></div>
+      <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/dark-matter.png')] opacity-20 mix-blend-overlay"></div>
+      {/* Decorative Moon Glow */}
+      <div className="absolute top-20 right-20 w-64 h-64 bg-[#D4AF37] rounded-full mix-blend-overlay filter blur-[100px] opacity-20 animate-pulse"></div>
 
-      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center">
-        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm mb-10 animate-fade-in-up hover:border-[#D4AF37]/30 transition-colors duration-300">
-          <Globe className="w-4 h-4 text-[#D4AF37]" />
-          <span className="text-[10px] md:text-xs uppercase tracking-[0.25em] text-gray-300 font-medium">
-            Importado desde USA · Entrega en Chile
-          </span>
+      <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm mb-8 animate-fade-in-up">
+          <Moon className="w-3 h-3 text-[#D4AF37] fill-current" />
+          <span className="text-[10px] md:text-xs uppercase tracking-[0.2em] text-gray-300">Aterrizando en Chile · Venta Directa</span>
         </div>
-
-        <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-white tracking-tighter leading-[1.1] mb-8 animate-fade-in-up animation-delay-100">
-          SNEAKERS {" "}
-          <span className="block text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-400 to-gray-600 mt-2">
-            ORIGINALES.
-          </span>
+        <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-white tracking-tighter leading-tight mb-6 animate-fade-in-up animation-delay-100">
+          EXCLUSIVE <br className="md:hidden" />
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#D4AF37] via-white to-gray-500">MOON.</span>
         </h1>
-
-        <p className="max-w-2xl text-gray-400 text-lg md:text-xl font-light mb-12 leading-relaxed animate-fade-in-up animation-delay-200">
-          Accede a stock limitado y modelos exclusivos. Sin precios de retail inflados. Venta directa y transparente.
+        <p className="max-w-xl text-gray-400 text-lg md:text-xl font-light mb-10 leading-relaxed animate-fade-in-up animation-delay-200">
+          Define tu gravedad. Accede a sneakers limitadas y modelos fuera de órbita. Sin precios de retail inflados.
         </p>
-
-        <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto animate-fade-in-up animation-delay-300 mb-16">
+        <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto animate-fade-in-up animation-delay-300">
           <ButtonPrimary href="#catalogo" icon={ArrowRight}>
-            VER STOCK DISPONIBLE
+            EXPLORAR COLECCIÓN
           </ButtonPrimary>
-          <ButtonSecondary href={getWhatsAppLink("Hola, quiero saber más sobre cómo comprar.")}>
-            CONSULTAR POR WHATSAPP
+          <ButtonSecondary href={getWhatsAppLink("Hola ExclusiveMoon, quiero saber más.")}>
+            HABLAR CON UN ASESOR
           </ButtonSecondary>
         </div>
-
-        <div className="relative w-full max-w-5xl animate-fade-in-up animation-delay-400">
-          <div className="aspect-[16/9] md:aspect-[21/9] w-full bg-gradient-to-b from-white/5 to-transparent rounded-2xl border border-white/10 flex items-end justify-center overflow-hidden group">
-            <img
-              src="https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?auto=format&fit=crop&q=80&w=2000"
-              alt="Hero Sneaker"
-              className="w-full h-full object-cover object-center opacity-60 grayscale group-hover:grayscale-0 group-hover:opacity-80 transition-all duration-1000 group-hover:scale-105"
+        {/* Hero Image Concept */}
+        <div className="mt-16 relative w-full max-w-4xl opacity-90 animate-fade-in-up animation-delay-400">
+          {/* Imagen del Hero */}
+          <div className="aspect-[16/9] md:aspect-[21/9] w-full bg-gradient-to-b from-white/5 to-transparent rounded-t-3xl border-t border-x border-white/5 flex items-end justify-center overflow-hidden">
+            <img 
+              src="https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?auto=format&fit=crop&q=80&w=2000" 
+              alt="Exclusive Moon Hero"
+              className="w-full h-full object-cover object-center mix-blend-overlay opacity-50 grayscale hover:grayscale-0 transition-all duration-700 scale-105 hover:scale-100"
             />
-            <div className="absolute bottom-0 w-full h-48 bg-gradient-to-t from-[#0B0B0B] via-[#0B0B0B]/50 to-transparent"></div>
-            <div className="absolute inset-0 bg-gradient-to-r from-[#0B0B0B]/50 via-transparent to-[#0B0B0B]/50"></div>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-3 gap-8 md:gap-16 mt-20 animate-fade-in-up animation-delay-500">
-          <div className="text-center">
-            <div className="text-3xl md:text-4xl font-bold text-white mb-2">100%</div>
-            <div className="text-xs md:text-sm text-gray-500 uppercase tracking-wider">Originales</div>
-          </div>
-          <div className="text-center border-x border-white/10">
-            <div className="text-3xl md:text-4xl font-bold text-white mb-2">USA</div>
-            <div className="text-xs md:text-sm text-gray-500 uppercase tracking-wider">Directo</div>
-          </div>
-          <div className="text-center">
-            <div className="text-3xl md:text-4xl font-bold text-white mb-2">24/7</div>
-            <div className="text-xs md:text-sm text-gray-500 uppercase tracking-wider">Atención</div>
+            <div className="absolute bottom-0 w-full h-40 bg-gradient-to-t from-[#0B0B0B] via-[#0B0B0B]/80 to-transparent"></div>
           </div>
         </div>
       </div>
@@ -189,8 +170,8 @@ const HowItWorks = () => {
           <ProcessStep
             number="01"
             icon={Box}
-            title="Revisas el Stock"
-            description="Publicamos stock real y modelos disponibles para importación inmediata. Sin sorpresas."
+            title="Revisa los Drops"
+            description="Publicamos drops (fases) reales y modelos aterrizando en Chile. Sin sorpresas."
           />
           <ProcessStep
             number="02"
@@ -290,14 +271,19 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           <div className="flex-shrink-0 flex items-center gap-2 group cursor-pointer">
-            <div className="w-9 h-9 bg-gradient-to-br from-white to-gray-300 text-black flex items-center justify-center font-bold font-serif italic text-xl shadow-lg group-hover:shadow-[#D4AF37]/20 transition-shadow duration-300">S</div>
-            <span className="text-white font-bold tracking-wider text-lg">SNEAKERS<span className="text-[#D4AF37] text-xs align-top ml-0.5">CL</span></span>
+            <div className="w-8 h-8 bg-white text-black flex items-center justify-center rounded-sm">
+              <Moon size={18} className="fill-current" />
+            </div>
+            {/* BRAND NAME */}
+            <span className="text-white font-bold tracking-widest text-lg group-hover:text-gray-200 transition-colors">
+                EXCLUSIVE<span className="font-light text-gray-400">MOON</span>
+            </span>
           </div>
           {/* Desktop nav */}
           <div className="hidden md:flex items-center space-x-8">
-            <a href="#catalogo" className="text-gray-300 hover:text-white text-sm tracking-widest transition-colors relative group">STOCK<span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#D4AF37] transition-all group-hover:w-full"></span></a>
-            <a href="#como-funciona" className="text-gray-300 hover:text-white text-sm tracking-widest transition-colors relative group">PROCESO<span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#D4AF37] transition-all group-hover:w-full"></span></a>
-            <a href="#confianza" className="text-gray-300 hover:text-white text-sm tracking-widest transition-colors relative group">GARANTÍA<span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#D4AF37] transition-all group-hover:w-full"></span></a>
+            <a href="#catalogo" className="text-gray-300 hover:text-white text-sm tracking-widest transition-colors relative group">Colección<span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#D4AF37] transition-all group-hover:w-full"></span></a>
+            <a href="#como-funciona" className="text-gray-300 hover:text-white text-sm tracking-widest transition-colors relative group">Proceso<span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#D4AF37] transition-all group-hover:w-full"></span></a>
+            <a href="#confianza" className="text-gray-300 hover:text-white text-sm tracking-widest transition-colors relative group">Garantía<span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#D4AF37] transition-all group-hover:w-full"></span></a>
             <ButtonPrimary href={getWhatsAppLink('Hola, tengo una consulta sobre el stock.')} className="!px-6 !py-2.5 !text-xs bg-[#D4AF37] hover:bg-[#b5952f] text-black border-none shadow-lg shadow-[#D4AF37]/20">WHATSAPP</ButtonPrimary>
           </div>
           {/* Mobile menu button */}
@@ -372,11 +358,15 @@ const ProductCard = ({ product }: ProductCardProps) => {
         </div>
       )}
       <div className="relative aspect-[4/5] overflow-hidden bg-[#1a1a1a]">
-        <img
-          src={product.image || "/placeholder.svg"}
-          alt={`${product.brand} ${product.model}`}
-          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-90 group-hover:opacity-100"
-        />
+        {product.image ? (
+          <img
+            src={product.image}
+            alt={`${product.brand} ${product.model}`}
+            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-90 group-hover:opacity-100"
+          />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center bg-gray-900 text-gray-500 text-xs">Sin imagen</div>
+        )}
         <div className={`absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent transition-opacity duration-500 ${isHovered ? "opacity-100" : "opacity-0"}`}></div>
         <div className={`absolute inset-0 flex items-center justify-center transition-all duration-500 ${isHovered ? "opacity-100" : "opacity-0"}`}>
           <ButtonPrimary
@@ -450,14 +440,14 @@ const Catalog = () => {
   return (
     <section id="catalogo" className="py-24 md:py-32 bg-[#0F0F0F]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <SectionTitle title="STOCK LIMITADO" subtitle="Selección exclusiva importada desde USA. Actualizado semanalmente." />
-        {/* Tabs TODO EL STOCK / DESTACADOS */}
+        <SectionTitle title="DROPS LIMITADOS" subtitle="Selección exclusiva aterrizando en Chile. Actualizado semanalmente." />
+        {/* Tabs TODOS LOS DROPS / DESTACADOS */}
         <div className="flex justify-center gap-4 mb-2">
           <button
             onClick={() => setTab('all')}
             className={`px-6 py-2.5 text-sm font-semibold tracking-wider transition-all duration-300 ${tab === 'all' ? 'bg-white text-black' : 'bg-white/5 text-gray-400 hover:bg-white/10 border border-white/10'}`}
           >
-            TODO EL STOCK
+            TODOS LOS DROPS
           </button>
           <button
             onClick={() => setTab('featured')}
@@ -575,7 +565,7 @@ const TrustSection = () => {
         <div className="bg-gradient-to-br from-[#141414] to-[#0F0F0F] border border-white/10 p-10 md:p-16 rounded-sm shadow-2xl">
           <div className="text-center mb-12">
             <ShieldCheck className="w-12 h-12 text-[#D4AF37] mx-auto mb-4" />
-            <h3 className="text-3xl md:text-4xl font-bold text-white mb-3 tracking-tight">POR QUÉ CONFIAR</h3>
+            <h3 className="text-3xl md:text-4xl font-bold text-white mb-3 tracking-tight">Garantía Lunar</h3>
             <p className="text-gray-500 text-sm md:text-base tracking-wide">Transparencia total en cada paso</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-2">
@@ -584,7 +574,7 @@ const TrustSection = () => {
             <TrustFactor text="Atención personalizada por humanos" />
             <TrustFactor text="Stock real o bajo demanda transparente" />
             <TrustFactor text="Sin costos ocultos ni sorpresas en aduana" />
-            <TrustFactor text="Entregas coordinadas y seguras en Santiago" />
+            <TrustFactor text="Entregas coordinadas en Santiago" />
           </div>
         </div>
       </div>
@@ -597,16 +587,11 @@ const AboutSection = () => {
     <section className="py-24 md:py-32 bg-[#0B0B0B] text-center relative overflow-hidden">
       <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10"></div>
       <div className="max-w-3xl mx-auto px-6 relative z-10">
-        <div className="inline-block px-4 py-1.5 rounded-full border border-[#D4AF37]/20 bg-[#D4AF37]/5 mb-8">
-          <span className="text-[#D4AF37] text-xs font-bold tracking-[0.25em]">SOBRE LA TIENDA</span>
-        </div>
-        <p className="text-2xl md:text-3xl lg:text-4xl text-white font-light leading-relaxed mb-8 italic">
-          "Somos una tienda boutique de zapatillas premium en Chile. Trabajamos con stock limitado y compras bajo demanda, priorizando
-          <span className="text-[#D4AF37] font-medium"> autenticidad</span>,
-          <span className="text-[#D4AF37] font-medium"> transparencia</span> y
-          <span className="text-[#D4AF37] font-medium"> atención directa</span>."
+        <h4 className="text-[#D4AF37] text-xs font-bold tracking-[0.2em] mb-6 uppercase">Sobre ExclusiveMoon</h4>
+        <p className="text-xl md:text-2xl text-white font-serif italic leading-relaxed mb-6">
+          "No somos retail. Somos el enlace entre Chile y lo exclusivo. Trabajamos bajo demanda, priorizando lo auténtico, lo raro y lo difícil de conseguir."
         </p>
-        <div className="w-20 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent mx-auto"></div>
+        <div className="w-16 h-px bg-white/20 mx-auto"></div>
       </div>
     </section>
   );
@@ -620,20 +605,18 @@ const CTASection = () => {
       <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
         <Sparkles className="w-12 h-12 text-[#D4AF37] mx-auto mb-6 animate-pulse" />
         <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-8 tracking-tight leading-tight">
-          ¿Buscas un modelo
-          <br className="hidden md:block" /> específico?
+          ¿Buscas un modelo específico?
         </h2>
         <p className="text-gray-400 mb-12 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
-          Si existe, lo conseguimos. Cuéntanos qué buscas y te ayudaremos a encontrarlo.
+          Si existe en el planeta, lo conseguimos.
         </p>
         <ButtonPrimary
           href={getWhatsAppLink('Hola, estoy buscando un modelo específico que no veo en la web.')}
           className="bg-[#D4AF37] hover:bg-[#c4a02e] text-black border-none text-base md:text-lg px-12 py-5 shadow-2xl shadow-[#D4AF37]/20 hover:shadow-[#D4AF37]/40"
           icon={MessageCircle}
         >
-          ESCRÍBENOS POR WHATSAPP
+          CONTACTAR AHORA
         </ButtonPrimary>
-        <p className="text-gray-600 text-sm mt-8 italic">"Si existe, lo conseguimos."</p>
       </div>
     </section>
   );
@@ -641,28 +624,25 @@ const CTASection = () => {
 
 const Footer = () => {
   return (
-    <footer className="bg-[#050505] py-16 border-t border-white/5">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row justify-between items-center gap-8 mb-12">
-          <div className="text-center md:text-left">
-            <div className="flex items-center gap-2 justify-center md:justify-start mb-3">
-              <div className="w-8 h-8 bg-white text-black flex items-center justify-center font-bold font-serif italic text-lg">S</div>
-              <span className="text-white font-bold tracking-wider text-lg">SNEAKERS<span className="text-[#D4AF37] text-xs align-top ml-0.5">CL</span></span>
-            </div>
-            <p className="text-gray-600 text-xs tracking-wide uppercase">Sneakers Originales · Stock Limitado · Chile</p>
-          </div>
-          <div className="flex space-x-6">
-            <a href="#" className="text-gray-500 hover:text-[#D4AF37] transition-colors duration-300" aria-label="Instagram">
-              <Instagram size={22} />
-            </a>
-            <a href={getWhatsAppLink('Hola!')} className="text-gray-500 hover:text-[#D4AF37] transition-colors duration-300" aria-label="WhatsApp">
-              <MessageCircle size={22} />
-            </a>
-          </div>
+    <footer className="bg-[#050505] py-12 border-t border-white/5">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
+        <div className="text-center md:text-left">
+           <div className="flex items-center justify-center md:justify-start gap-2 mb-2">
+             <Moon size={14} className="text-[#D4AF37] fill-current" />
+             <span className="text-white font-bold tracking-widest text-lg">EXCLUSIVE<span className="font-light text-gray-400">MOON</span></span>
+           </div>
+           <p className="text-gray-600 text-xs tracking-wide uppercase">Importado desde USA · Stock Limitado · Chile</p>
         </div>
-        <div className="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-gray-600 text-xs">
-          <p>&copy; {new Date().getFullYear()} SNEAKERS CL. Todos los derechos reservados.</p>
-          <p className="text-gray-700">Diseñado con ❤️ en Chile</p>
+        <div className="flex space-x-6">
+          <a href="#" className="text-gray-500 hover:text-white transition-colors">
+            <Instagram size={20} />
+          </a>
+          <a href={getWhatsAppLink("Hola ExclusiveMoon!")} className="text-gray-500 hover:text-white transition-colors">
+            <MessageCircle size={20} />
+          </a>
+        </div>
+        <div className="text-gray-600 text-xs">
+          © {new Date().getFullYear()} ExclusiveMoon. All rights reserved.
         </div>
       </div>
     </footer>
