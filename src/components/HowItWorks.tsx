@@ -51,11 +51,12 @@ const HowItWorks = ({ onOpenClub }: HowItWorksProps) => {
             </p>
           </div>
           <div className="relative z-10 flex-shrink-0">
-             <button 
-                onClick={onOpenClub}
-                className="bg-[#D4AF37] hover:bg-[#b5952f] text-black border-none px-8 py-3 font-bold rounded transition-colors"
+            <button 
+              type="button"
+              className="bg-gray-700 text-gray-300 border-none px-8 py-3 font-bold rounded opacity-60 cursor-not-allowed"
+              disabled
             >
-                ASEGURAR MI CUPO
+              PRÓXIMAMENTE
             </button>
           </div>
         </div>

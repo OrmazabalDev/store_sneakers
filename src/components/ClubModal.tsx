@@ -23,49 +23,26 @@ const ClubModal = ({ isOpen, onClose }: ClubModalProps) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
-    setError("");
+    setError(null);
+    const SHEET_ID = import.meta.env.VITE_SHEET_ID;
+    const API_KEY = import.meta.env.VITE_GOOGLE_API_KEY;
     try {
-      const response = await fetch(
-        "https://script.google.com/macros/s/AKfycbz-oAHKM5di576SG9dfWB0ysGhH3XyePyeZnrCn93Mp-wlJuAVf0hT7oN-kTFtw-Z4ZjA/exec",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-          body: new URLSearchParams({
-            nombre: formData.nombre,
-            whatsapp: formData.whatsapp,
-            talla: formData.talla,
-            marcas: formData.marcas,
-            modelos: formData.modelos,
-          }).toString(),
-        }
-      );
-
-      const result = await response.json();
-
-      if (!result.success) {
-        throw new Error("Error al registrar");
+      const result = await sendClientToSheet(formData, SHEET_ID, API_KEY);
+      if (result.success) {
+        setIsSubmitting(false);
+        setIsSuccess(true);
+        setTimeout(() => {
+          setIsSuccess(false);
+          setFormData({ nombre: '', whatsapp: '', talla: '', marcas: '', modelos: '' });
+          onClose();
+        }, 3000);
+      } else {
+        setIsSubmitting(false);
+        setError(result.error || 'Error desconocido al registrar.');
       }
-
-      setFormData({
-        nombre: "",
-        whatsapp: "",
-        talla: "",
-        marcas: "",
-        modelos: "",
-      });
-
-      setIsSuccess(true);
-      setTimeout(() => {
-        setIsSuccess(false);
-        onClose();
-      }, 3000);
-
     } catch (err) {
-      setError("No se pudo registrar. Intenta nuevamente.");
-    } finally {
       setIsSubmitting(false);
+      setError('Error de red o inesperado al registrar.');
     }
   };
 

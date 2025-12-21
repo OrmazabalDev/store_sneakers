@@ -22,12 +22,6 @@ const CTASection = ({ onOpenClub, whatsappNumber }: CTASectionProps) => {
           Si existe en el planeta, lo conseguimos.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <button 
-            onClick={onOpenClub}
-            className="bg-[#D4AF37] hover:bg-[#c4a02e] text-black border-none text-base md:text-lg px-12 py-5 shadow-2xl shadow-[#D4AF37]/20 hover:shadow-[#D4AF37]/40 font-bold rounded transition-colors"
-          >
-            ASEGURAR MI CUPO EN EL CLUB
-          </button>
           <Button 
             href={getWhatsAppLink(whatsappNumber, 'Hola, estoy buscando un modelo específico que no veo en la web.')}
             className="text-base md:text-lg px-12 py-5"
@@ -37,7 +31,6 @@ const CTASection = ({ onOpenClub, whatsappNumber }: CTASectionProps) => {
             CONTACTAR POR WHATSAPP
           </Button>
         </div>
-        <p className="text-xs text-gray-500 mt-6">*El Club Preferente cerrará su registro público pronto.</p>
       </div>
     </section>
   );
