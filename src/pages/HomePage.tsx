@@ -1,3 +1,31 @@
+// Utilidad para obtener opciones únicas (corrige error de tipos)
+function getUniqueOptions<T extends keyof Product>(arr: Product[], key: T): Product[T][] {
+  return Array.from(new Set(arr.map((item) => item[key]))).filter(Boolean).sort();
+}
+// SelectFilter reutilizable
+interface SelectFilterProps {
+  label: string;
+  value: string | number;
+  onChange: (value: string) => void;
+  options: (string | number)[];
+  allLabel?: string;
+  className?: string;
+}
+const SelectFilter = ({ label, value, onChange, options, allLabel = 'Todos', className = '' }: SelectFilterProps) => (
+  <div className={`flex flex-col w-full ${className}`}>
+    <label className="text-xs text-gray-300 mb-1 font-semibold uppercase tracking-widest">{label}</label>
+    <select
+      value={value}
+      onChange={e => onChange(e.target.value)}
+      className="px-2 py-2 rounded-lg bg-white text-black border border-white/10 focus:border-[#D4AF37] focus:ring-2 focus:ring-[#D4AF37]/30 outline-none transition-all w-full"
+    >
+      <option value="">{allLabel}</option>
+      {options.filter(o => o && o.toString().trim() !== '').map((o) => (
+        <option key={o} value={o}>{o}</option>
+      ))}
+    </select>
+  </div>
+);
 
 import { useState, useEffect } from 'react';
 import {
@@ -118,12 +146,12 @@ const Hero = () => {
           Define tu gravedad. Accede a sneakers limitadas y modelos fuera de órbita. Sin precios de retail inflados.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto animate-fade-in-up animation-delay-300">
-          <ButtonPrimary href="#catalogo" icon={ArrowRight}>
+          <Button href="#catalogo" icon={ArrowRight} variant="primary">
             EXPLORAR COLECCIÓN
-          </ButtonPrimary>
-          <ButtonSecondary href={getWhatsAppLink("Hola ExclusiveMoon, quiero saber más.")}>
+          </Button>
+          <Button href={getWhatsAppLink("Hola ExclusiveMoon, quiero saber más.")} variant="secondary">
             HABLAR CON UN ASESOR
-          </ButtonSecondary>
+          </Button>
         </div>
         {/* Hero Image Concept */}
         <div className="mt-16 relative w-full max-w-4xl opacity-90 animate-fade-in-up animation-delay-400">
@@ -205,16 +233,20 @@ const HowItWorks = () => {
     </section>
   );
 };
-interface ButtonPrimaryProps {
+
+interface ButtonProps {
   children: React.ReactNode;
   onClick?: () => void;
   href?: string;
   className?: string;
   icon?: React.ElementType;
+  variant?: 'primary' | 'secondary';
 }
-const ButtonPrimary = ({ children, onClick, href, className = '', icon: Icon }: ButtonPrimaryProps) => {
+const Button = ({ children, onClick, href, className = '', icon: Icon, variant = 'primary' }: ButtonProps) => {
   const baseClass =
-    'group relative inline-flex items-center justify-center px-8 py-3.5 text-sm font-semibold transition-all duration-300 ease-out bg-white text-black hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-black focus:ring-white shadow-lg hover:shadow-xl';
+    variant === 'primary'
+      ? 'group relative inline-flex items-center justify-center px-8 py-3.5 text-sm font-semibold transition-all duration-300 ease-out bg-white text-black hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-black focus:ring-white shadow-lg hover:shadow-xl'
+      : 'inline-flex items-center justify-center px-8 py-3.5 text-sm font-semibold transition-all duration-300 border border-white/30 text-white hover:bg-white/10 hover:border-white/50 focus:outline-none backdrop-blur-sm';
   if (href) {
     const isInternalAnchor = typeof href === 'string' && href.startsWith('#');
     return (
@@ -232,29 +264,6 @@ const ButtonPrimary = ({ children, onClick, href, className = '', icon: Icon }: 
     <button onClick={onClick} className={`${baseClass} ${className}`}>
       {children}
       {Icon && <Icon className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />}
-    </button>
-  );
-};
-
-interface ButtonSecondaryProps {
-  children: React.ReactNode;
-  onClick?: () => void;
-  href?: string;
-  className?: string;
-}
-const ButtonSecondary = ({ children, onClick, href, className = '' }: ButtonSecondaryProps) => {
-  const baseClass =
-    'inline-flex items-center justify-center px-8 py-3.5 text-sm font-semibold transition-all duration-300 border border-white/30 text-white hover:bg-white/10 hover:border-white/50 focus:outline-none backdrop-blur-sm';
-  if (href) {
-    return (
-      <a href={href} target="_blank" rel="noopener noreferrer" className={`${baseClass} ${className}`}>
-        {children}
-      </a>
-    );
-  }
-  return (
-    <button onClick={onClick} className={`${baseClass} ${className}`}>
-      {children}
     </button>
   );
 };
@@ -299,7 +308,7 @@ const Navbar = () => {
             <a href="#catalogo" className="text-gray-300 hover:text-white text-sm tracking-widest transition-colors relative group">Colección<span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#D4AF37] transition-all group-hover:w-full"></span></a>
             <a href="#como-funciona" className="text-gray-300 hover:text-white text-sm tracking-widest transition-colors relative group">Proceso<span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#D4AF37] transition-all group-hover:w-full"></span></a>
             <a href="#confianza" className="text-gray-300 hover:text-white text-sm tracking-widest transition-colors relative group">Garantía<span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#D4AF37] transition-all group-hover:w-full"></span></a>
-            <ButtonPrimary href={getWhatsAppLink('Hola, tengo una consulta sobre el stock.')} className="!px-6 !py-2.5 !text-xs bg-[#D4AF37] hover:bg-[#b5952f] text-black border-none shadow-lg shadow-[#D4AF37]/20">WHATSAPP</ButtonPrimary>
+            <Button href={getWhatsAppLink('Hola, tengo una consulta sobre el stock.')} className="!px-6 !py-2.5 !text-xs bg-[#D4AF37] hover:bg-[#b5952f] text-black border-none shadow-lg shadow-[#D4AF37]/20" variant="primary">WHATSAPP</Button>
           </div>
           {/* Mobile menu button */}
           <div className="md:hidden flex items-center">
@@ -339,12 +348,13 @@ const Navbar = () => {
               GARANTÍA
             </a>
             <div className="px-3 py-2">
-              <ButtonPrimary
+              <Button
                 href={getWhatsAppLink('Hola, tengo una consulta sobre el stock.')}
                 className="w-full !px-6 !py-3 !text-xs bg-[#D4AF37] hover:bg-[#b5952f] text-black border-none"
+                variant="primary"
               >
                 WHATSAPP
-              </ButtonPrimary>
+              </Button>
             </div>
           </div>
         </div>
@@ -384,13 +394,14 @@ const ProductCard = ({ product }: ProductCardProps) => {
         )}
         <div className={`absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent transition-opacity duration-500 ${isHovered ? "opacity-100" : "opacity-0"}`}></div>
         <div className={`absolute inset-0 flex items-center justify-center transition-all duration-500 ${isHovered ? "opacity-100" : "opacity-0"}`}>
-          <ButtonPrimary
+          <Button
             href={getWhatsAppLink('', { brand: product.brand, model: product.model, price: product.price, size: product.size })}
             className="!px-6 !py-3 !text-xs scale-90 group-hover:scale-100 transition-transform duration-500 shadow-2xl"
             icon={MessageCircle}
+            variant="primary"
           >
             CONSULTAR AHORA
-          </ButtonPrimary>
+          </Button>
         </div>
       </div>
       <div className="p-6">
@@ -431,9 +442,9 @@ const Catalog = () => {
   }, []);
 
   // Obtener opciones únicas para filtros
-  const brands = Array.from(new Set(products.map((p) => p.brand))).sort();
-  const sizes = Array.from(new Set(products.map((p) => p.size))).sort();
-  const statuses = Array.from(new Set(products.map((p) => p.status))).sort();
+  const brands = getUniqueOptions(products, 'brand');
+  const sizes = getUniqueOptions(products, 'size');
+  const statuses = getUniqueOptions(products, 'status');
 
   // Filtrado
   let filteredProducts = products.filter((p) => {
@@ -475,43 +486,40 @@ const Catalog = () => {
         {/* Filtros arriba - Responsive */}
         <div className="flex flex-col md:flex-row gap-4 mb-6 items-stretch md:items-end justify-between">
           {/* Selector de cantidad por página */}
-          <div className="flex flex-col w-full md:w-[110px]">
-            <label className="text-xs text-gray-300 mb-1 font-semibold uppercase tracking-widest">Item por pag.</label>
-            <select value={pageSize} onChange={e => { setPageSize(Number(e.target.value)); setPage(1); }} className="px-2 py-2 rounded-lg bg-white text-black border border-white/10 focus:border-[#D4AF37] focus:ring-2 focus:ring-[#D4AF37]/30 outline-none transition-all w-full">
-              <option value={10}>10</option>
-              <option value={20}>20</option>
-              <option value={30}>30</option>
-            </select>
-          </div>
+          <SelectFilter
+            label="Item por pag."
+            value={pageSize}
+            onChange={v => { setPageSize(Number(v)); setPage(1); }}
+            options={[10, 20, 30]}
+            allLabel="10"
+            className="md:w-[110px]"
+          />
           {/* Filtros agrupados */}
           <div className="flex flex-col sm:flex-row gap-4 w-full md:w-auto ml-0 md:ml-auto">
-            <div className="flex flex-col w-full sm:w-[120px]">
-              <label className="text-xs text-gray-300 mb-1 font-semibold uppercase tracking-widest">Marca</label>
-              <select value={brand} onChange={e => { setBrand(e.target.value); setPage(1); }} className="px-2 py-2 rounded-lg bg-white text-black border border-white/10 focus:border-[#D4AF37] focus:ring-2 focus:ring-[#D4AF37]/30 outline-none transition-all w-full">
-                <option value="">Todas</option>
-                {brands.filter(b => b && b.trim() !== '').map((b) => (
-                  <option key={b} value={b}>{b}</option>
-                ))}
-              </select>
-            </div>
-            <div className="flex flex-col w-full sm:w-[100px]">
-              <label className="text-xs text-gray-300 mb-1 font-semibold uppercase tracking-widest">Talla</label>
-              <select value={size} onChange={e => { setSize(e.target.value); setPage(1); }} className="px-2 py-2 rounded-lg bg-white text-black border border-white/10 focus:border-[#D4AF37] focus:ring-2 focus:ring-[#D4AF37]/30 outline-none transition-all w-full">
-                <option value="">Todas</option>
-                {sizes.filter(s => s && s.trim() !== '').map((s) => (
-                  <option key={s} value={s}>{s}</option>
-                ))}
-              </select>
-            </div>
-            <div className="flex flex-col w-full sm:w-[120px]">
-              <label className="text-xs text-gray-300 mb-1 font-semibold uppercase tracking-widest">Estado</label>
-              <select value={status} onChange={e => { setStatus(e.target.value); setPage(1); }} className="px-2 py-2 rounded-lg bg-white text-black border border-white/10 focus:border-[#D4AF37] focus:ring-2 focus:ring-[#D4AF37]/30 outline-none transition-all w-full">
-                <option value="">Todos</option>
-                {statuses.filter(s => s && s.trim() !== '').map((s) => (
-                  <option key={s} value={s}>{s}</option>
-                ))}
-              </select>
-            </div>
+            <SelectFilter
+              label="Marca"
+              value={brand}
+              onChange={v => { setBrand(v); setPage(1); }}
+              options={brands}
+              allLabel="Todas"
+              className="sm:w-[120px]"
+            />
+            <SelectFilter
+              label="Talla"
+              value={size}
+              onChange={v => { setSize(v); setPage(1); }}
+              options={sizes}
+              allLabel="Todas"
+              className="sm:w-[100px]"
+            />
+            <SelectFilter
+              label="Estado"
+              value={status}
+              onChange={v => { setStatus(v); setPage(1); }}
+              options={statuses}
+              allLabel="Todos"
+              className="sm:w-[120px]"
+            />
           </div>
         </div>
         {/* Productos y paginación */}
@@ -545,12 +553,14 @@ const Catalog = () => {
         <div className="mt-20 text-center p-8 md:p-12 border border-white/10 bg-gradient-to-br from-[#141414] to-[#0B0B0B]">
           <TrendingUp className="w-8 h-8 text-[#D4AF37] mx-auto mb-4" />
           <p className="text-gray-400 text-base md:text-lg mb-6 font-light">¿No encuentras tu modelo ideal?</p>
-          <a
+          <Button
             href={getWhatsAppLink('Hola, busco un modelo que no está en el catálogo.')}
             className="inline-flex items-center text-white hover:text-[#D4AF37] transition-colors font-semibold border-b-2 border-white/20 hover:border-[#D4AF37] pb-1 text-lg"
+            icon={ArrowRight}
+            variant="secondary"
           >
-            Pregúntanos por disponibilidad bajo pedido <ArrowRight className="ml-2 w-5 h-5" />
-          </a>
+            Pregúntanos por disponibilidad bajo pedido
+          </Button>
         </div>
       </div>
     </section>
@@ -625,13 +635,14 @@ const CTASection = () => {
         <p className="text-gray-400 mb-12 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
           Si existe en el planeta, lo conseguimos.
         </p>
-        <ButtonPrimary
+        <Button
           href={getWhatsAppLink('Hola, estoy buscando un modelo específico que no veo en la web.')}
           className="bg-[#D4AF37] hover:bg-[#c4a02e] text-black border-none text-base md:text-lg px-12 py-5 shadow-2xl shadow-[#D4AF37]/20 hover:shadow-[#D4AF37]/40"
           icon={MessageCircle}
+          variant="primary"
         >
           CONTACTAR AHORA
-        </ButtonPrimary>
+        </Button>
       </div>
     </section>
   );
