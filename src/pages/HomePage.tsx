@@ -137,6 +137,21 @@ const Hero = () => {
             <div className="absolute bottom-0 w-full h-40 bg-gradient-to-t from-[#0B0B0B] via-[#0B0B0B]/80 to-transparent"></div>
           </div>
         </div>
+        {/* Beneficios destacados debajo de la imagen */}
+        <div className="grid grid-cols-3 gap-8 md:gap-16 mt-10 animate-fade-in-up animation-delay-600">
+          <div className="text-center">
+            <div className="text-3xl md:text-4xl font-bold text-white mb-2">100%</div>
+            <div className="text-xs md:text-sm text-gray-500 uppercase tracking-wider">Originales</div>
+          </div>
+          <div className="text-center border-x border-white/10">
+            <div className="text-3xl md:text-4xl font-bold text-white mb-2">USA</div>
+            <div className="text-xs md:text-sm text-gray-500 uppercase tracking-wider">Directo</div>
+          </div>
+          <div className="text-center">
+            <div className="text-3xl md:text-4xl font-bold text-white mb-2">24/7</div>
+            <div className="text-xs md:text-sm text-gray-500 uppercase tracking-wider">Atención</div>
+          </div>
+        </div>
       </div>
     </section>
   );
