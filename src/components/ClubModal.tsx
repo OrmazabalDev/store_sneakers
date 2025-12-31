@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { sendClientToSheet } from '../utils';
+import supabase from '../utils/supabase';
 import { X, Star, Lock, Check } from 'lucide-react';
 
 interface ClubModalProps {
@@ -10,11 +10,11 @@ interface ClubModalProps {
 const ClubModal = ({ isOpen, onClose }: ClubModalProps) => {
   // Estado actualizado para coincidir con la DB: Marcas y Modelos separados
   const [formData, setFormData] = useState({
-    nombre: '',
-    whatsapp: '',
-    talla: '',
-    marcas: '',
-    modelos: ''
+    nombre_completoted_at: '',
+    numero_whatsapp: '',
+    talla_us: '',
+    marcas_preferencia: '',
+    modelos_preferencia: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -24,21 +24,31 @@ const ClubModal = ({ isOpen, onClose }: ClubModalProps) => {
     e.preventDefault();
     setIsSubmitting(true);
     setError(null);
-    const SHEET_ID = import.meta.env.VITE_SHEET_ID;
-    const API_KEY = import.meta.env.VITE_GOOGLE_API_KEY;
     try {
-      const result = await sendClientToSheet(formData, SHEET_ID, API_KEY);
-      if (result.success) {
+      // Normalizar número de WhatsApp: agregar 569 y quitar caracteres no numéricos
+      const numeroSolo = formData.numero_whatsapp.replace(/\D/g, '');
+      const data = {
+        ...formData,
+        numero_whatsapp: `569${numeroSolo}`
+      };
+      // Renombrar el campo para coincidir con la base de datos
+      const { nombre_completoted_at, ...rest } = data;
+      const insertData = {
+        nombre_completoted_at,
+        ...rest
+      };
+      const { error } = await supabase.from('clientes').insert([insertData]);
+      if (error) {
+        setIsSubmitting(false);
+        setError(error.message || 'Error desconocido al registrar.');
+      } else {
         setIsSubmitting(false);
         setIsSuccess(true);
         setTimeout(() => {
           setIsSuccess(false);
-          setFormData({ nombre: '', whatsapp: '', talla: '', marcas: '', modelos: '' });
+          setFormData({ nombre_completoted_at: '', numero_whatsapp: '', talla_us: '', marcas_preferencia: '', modelos_preferencia: '' });
           onClose();
         }, 3000);
-      } else {
-        setIsSubmitting(false);
-        setError(result.error || 'Error desconocido al registrar.');
       }
     } catch (err) {
       setIsSubmitting(false);
@@ -84,9 +94,9 @@ const ClubModal = ({ isOpen, onClose }: ClubModalProps) => {
                 <label className="block text-xs uppercase tracking-widest text-gray-500 mb-1">Nombre Completo</label>
                 <input 
                   type="text" 
-                  name="nombre"
+                  name="nombre_completoted_at"
                   required
-                  value={formData.nombre}
+                  value={formData.nombre_completoted_at}
                   onChange={handleChange}
                   className="w-full bg-[#0B0B0B] border border-white/10 text-white px-4 py-3 text-sm focus:border-[#D4AF37] focus:outline-none transition-colors"
                   placeholder="Ej: Juan Pérez"
@@ -99,9 +109,9 @@ const ClubModal = ({ isOpen, onClose }: ClubModalProps) => {
                     <span className="inline-flex items-center px-2 rounded-l bg-[#222] border border-r-0 border-white/10 text-gray-400 text-sm select-none">+569</span>
                     <input
                       type="tel"
-                      name="whatsapp"
+                      name="numero_whatsapp"
                       required
-                      value={formData.whatsapp}
+                      value={formData.numero_whatsapp}
                       onChange={handleChange}
                       className="w-full bg-[#0B0B0B] border border-white/10 border-l-0 text-white px-4 py-3 text-sm focus:border-[#D4AF37] focus:outline-none transition-colors rounded-r"
                       placeholder="12345678"
@@ -116,9 +126,9 @@ const ClubModal = ({ isOpen, onClose }: ClubModalProps) => {
                   <label className="block text-xs uppercase tracking-widest text-gray-500 mb-1">Talla (US)</label>
                   <input 
                     type="text" 
-                    name="talla"
+                    name="talla_us"
                     required
-                    value={formData.talla}
+                    value={formData.talla_us}
                     onChange={handleChange}
                     className="w-full bg-[#0B0B0B] border border-white/10 text-white px-4 py-3 text-sm focus:border-[#D4AF37] focus:outline-none transition-colors"
                     placeholder="Ej: 10, 9.5..."
@@ -130,8 +140,8 @@ const ClubModal = ({ isOpen, onClose }: ClubModalProps) => {
                 <label className="block text-xs uppercase tracking-widest text-gray-500 mb-1">Marcas de preferencia</label>
                 <input 
                   type="text" 
-                  name="marcas"
-                  value={formData.marcas}
+                  name="marcas_preferencia"
+                  value={formData.marcas_preferencia}
                   onChange={handleChange}
                   className="w-full bg-[#0B0B0B] border border-white/10 text-white px-4 py-3 text-sm focus:border-[#D4AF37] focus:outline-none transition-colors"
                   placeholder="Ej: Nike, Jordan, Adidas, New Balance..."
@@ -141,8 +151,8 @@ const ClubModal = ({ isOpen, onClose }: ClubModalProps) => {
                 <label className="block text-xs uppercase tracking-widest text-gray-500 mb-1">Modelos de preferencia</label>
                 <input 
                   type="text" 
-                  name="modelos"
-                  value={formData.modelos}
+                  name="modelos_preferencia"
+                  value={formData.modelos_preferencia}
                   onChange={handleChange}
                   className="w-full bg-[#0B0B0B] border border-white/10 text-white px-4 py-3 text-sm focus:border-[#D4AF37] focus:outline-none transition-colors"
                   placeholder="Ej: Air Jordan 1, Yeezy 350, Dunk Low..."

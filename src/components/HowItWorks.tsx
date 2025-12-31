@@ -53,10 +53,10 @@ const HowItWorks = ({ onOpenClub }: HowItWorksProps) => {
           <div className="relative z-10 flex-shrink-0">
             <button 
               type="button"
-              className="bg-gray-700 text-gray-300 border-none px-8 py-3 font-bold rounded opacity-60 cursor-not-allowed"
-              disabled
+              className="bg-[#D4AF37] hover:bg-[#b5952f] text-black border-none px-8 py-3 font-bold rounded transition-colors"
+              onClick={onOpenClub}
             >
-              PRÓXIMAMENTE
+              UNIRME AL CLUB
             </button>
           </div>
         </div>

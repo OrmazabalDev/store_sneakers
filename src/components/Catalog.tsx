@@ -129,13 +129,18 @@ const Catalog = ({ sheetId, apiKey, whatsappNumber }: CatalogProps) => {
           ) : (
             <>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-10 lg:gap-x-8 lg:gap-y-12">
-                {paginatedProducts.length === 0 ? (
-                  <div className="col-span-full text-center text-gray-400">No hay productos disponibles.</div>
-                ) : (
-                  paginatedProducts.map((product) => (
+                {(() => {
+                  // Filtrar productos inválidos: sin id, stock 0, o ids duplicados
+                  const validProducts = paginatedProducts.filter((product, idx, arr) =>
+                    product.id && product.stock !== '0' && arr.findIndex(p => p.id === product.id) === idx
+                  );
+                  if (validProducts.length === 0) {
+                    return <div className="col-span-full text-center text-gray-400">No hay productos disponibles.</div>;
+                  }
+                  return validProducts.map((product) => (
                     <ProductCard key={product.id} product={product} whatsappNumber={whatsappNumber} />
-                  ))
-                )}
+                  ));
+                })()}
               </div>
               {/* Paginación abajo */}
               <div className="flex justify-center items-center gap-2 mt-8">

@@ -14,7 +14,11 @@ const API_KEY = import.meta.env.VITE_GOOGLE_API_KEY;
   const WHATSAPP_NUMBER = import.meta.env.VITE_WHATSAPP_NUMBER;
   const missingEnvVars = !SHEET_ID || !API_KEY || !WHATSAPP_NUMBER;
 
-  export default function HomePage() {
+  interface HomePageProps {
+    onAdminLogin?: () => void;
+  }
+
+  export default function HomePage({ onAdminLogin }: HomePageProps) {
     const [isClubOpen, setIsClubOpen] = useState(false);
     if (missingEnvVars) {
       return (
@@ -42,7 +46,7 @@ const API_KEY = import.meta.env.VITE_GOOGLE_API_KEY;
         <TrustSection />
         <AboutSection />
         <CTASection onOpenClub={() => setIsClubOpen(true)} whatsappNumber={WHATSAPP_NUMBER} />
-        <Footer whatsappNumber={WHATSAPP_NUMBER} />
+        <Footer whatsappNumber={WHATSAPP_NUMBER} onAdminLogin={onAdminLogin} />
       </main>
     );
   }
